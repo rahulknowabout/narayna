@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Custom Checkboxes with CSS and jQuery</title>
+<style type="text/css">
+	.custom-checkbox{
+		width: 16px;
+		height: 16px;
+		display: inline-block;
+		position: relative;
+		z-index: 1;
+		top: 3px;
+		background: url("checkbox.png") no-repeat;
+	}
+	.custom-checkbox:hover{
+		background: url("checkbox-hover.png") no-repeat;
+	}
+	.custom-checkbox.selected{
+		background: url("checkbox-selected.png") no-repeat;
+	}
+	.custom-checkbox input[type="checkbox"]{
+		margin: 0;
+		position: absolute;
+		z-index: 2;            
+		cursor: pointer;
+		outline: none;
+		opacity: 0;
+		/* CSS hacks for older browsers */
+		_noFocusLine: expression(this.hideFocus=true); 
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+		filter: alpha(opacity=0);
+		-khtml-opacity: 0;
+		-moz-opacity: 0;
+	}
+    /* Let's Beautify Our Form */
+    form{
+        margin: 20px;
+    }
+    label{
+        display: block;
+        padding: 2px 0;
+    }
+    input[type="submit"]{
+        float: left;
+        background: #f2f2f2;
+        border: 1px solid #CCCCCC;
+        border-radius: 4px;
+        margin-top: 20px;
+        padding: 4px 10px;
+        cursor: pointer;
+        outline: none;
+    }
+    input[type="submit"]:hover{
+        color: #fff;
+        border-color: #1b7aa9;
+        background-color: #239fdb;
+    }
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    function customCheckbox(checkboxName){
+        var checkBox = $('input[name="'+ checkboxName +'"]');
+        $(checkBox).each(function(){
+            $(this).wrap( "<span class='custom-checkbox'></span>" );
+            if($(this).is(':checked')){
+                $(this).parent().addClass("selected");
+            }
+        });
+        $(checkBox).click(function(){
+            $(this).parent().toggleClass("selected");
+        });
+    }
+    $(document).ready(function (){
+        customCheckbox("sport[]");
+        customCheckbox("car[]");
+        customCheckbox("confirm");
+    })
+</script>
+</head>
+<body>
+    <form action="action.php" method="post">
+        <h3>Choose Your Favorite Sports</h3>
+        <label><input type="checkbox" name="sport[]" value="football" /> Football</label>
+        <label><input type="checkbox" name="sport[]" value="cricket" /> Cricket</label>
+        <label><input type="checkbox" name="sport[]" value="baseball" /> Baseball</label>
+        <label><input type="checkbox" name="sport[]" value="tennis" /> Tennis</label>
+        <label><input type="checkbox" name="sport[]" value="basketball" /> Basketball</label>
+        
+        <h3>Choose Your Favorite Car</h3>
+        <label><input type="checkbox" name="car[]" value="ferrari" /> Ferrari</label>
+        <label><input type="checkbox" name="car[]" value="lamborghini" /> Lamborghini</label>
+        <label><input type="checkbox" name="car[]" value="audi" /> Audi</label>
+        <label><input type="checkbox" name="car[]" value="mercedes" /> Mercedes</label>
+        
+        <h3>Are You Sure?</h3>
+        <p><label><input type="checkbox" name="confirm" checked="checked" value="yes" /> Yes</label></p>
+        <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>
